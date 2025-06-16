@@ -9,11 +9,11 @@
 
         1. Crie um novo repositório no seu GitHub.
         2. Salve este código completo em um arquivo chamado "index.html".
-        3. Faça o upload do arquivo "index.html" para o repositório que você criou.
-        4. No seu repositório no GitHub, vá em "Settings" (Configurações) > "Pages" (Páginas).
-        5. Na seção "Branch", selecione a branch principal ("main" ou "master") e a pasta "/ (root)".
-        6. Clique em "Save" (Salvar).
-        7. Após alguns minutos, seu site estará no ar no endereço: https://SEU-USUARIO.github.io/NOME-DO-REPOSITORIO/
+        3. Salve o código da página "Quem Somos" em um arquivo chamado "quem-somos.html".
+        4. Faça o upload dos DOIS arquivos ("index.html" e "quem-somos.html") para o repositório.
+        5. No seu repositório no GitHub, vá em "Settings" > "Pages".
+        6. Na seção "Branch", selecione a branch principal e a pasta "/ (root)".
+        7. Clique em "Save". Seu site estará no ar em: https://SEU-USUARIO.github.io/NOME-DO-REPOSITORIO/
     -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -22,14 +22,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals with Blue and Gold Accents -->
-    <!-- Application Structure Plan: A single-page, vertical-scrolling application with a sticky navigation bar for improved usability. The structure prioritizes a persuasive narrative flow: Hero section, a new "Quem Somos" section, an interactive carousel for "10 Priority Proposals", a tabbed interface for "4 Pillars", data visualization, directorate correlations, and a CTA. The carousel and sticky nav enhance engagement and structure over the previous version. -->
-    <!-- Visualization & Content Choices: 
-        - 10 Priorities: Goal: Inform/Engage. Method: Interactive Swiper.js carousel. Interaction: Swipe/click to navigate slides, click to expand details. Justification: More dynamic and engaging than a static grid, ideal for highlighting key promises.
-        - Navigation: Goal: Organize/Navigate. Method: Sticky horizontal menu. Interaction: Click to smooth-scroll. Justification: Provides clear, persistent site structure and improves user experience.
-        - Other elements remain as before, supporting the enhanced interactive structure.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         html {
             scroll-behavior: smooth;
@@ -108,7 +100,7 @@
                 <a href="#inicio" class="text-xl font-bold text-blue-800">Chapa de Oposição</a>
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#inicio" class="nav-link text-gray-600 hover:text-blue-600 transition">Início</a>
-                    <a href="#quemsomos" class="nav-link text-gray-600 hover:text-blue-600 transition">Quem Somos</a>
+                    <a href="quem-somos.html" class="nav-link text-gray-600 hover:text-blue-600 transition">Quem Somos</a>
                     <a href="#prioridades" class="nav-link text-gray-600 hover:text-blue-600 transition">Propostas</a>
                     <a href="#pilares" class="nav-link text-gray-600 hover:text-blue-600 transition">Pilares</a>
                     <a href="#diretorias" class="nav-link text-gray-600 hover:text-blue-600 transition">Diretorias</a>
@@ -122,7 +114,7 @@
         </div>
         <div id="mobile-menu" class="hidden md:hidden">
             <a href="#inicio" class="block py-2 px-6 text-sm text-gray-600 hover:bg-gray-100">Início</a>
-            <a href="#quemsomos" class="block py-2 px-6 text-sm text-gray-600 hover:bg-gray-100">Quem Somos</a>
+            <a href="quem-somos.html" class="block py-2 px-6 text-sm text-gray-600 hover:bg-gray-100">Quem Somos</a>
             <a href="#prioridades" class="block py-2 px-6 text-sm text-gray-600 hover:bg-gray-100">Propostas</a>
             <a href="#pilares" class="block py-2 px-6 text-sm text-gray-600 hover:bg-gray-100">Pilares</a>
             <a href="#diretorias" class="block py-2 px-6 text-sm text-gray-600 hover:bg-gray-100">Diretorias</a>
@@ -140,19 +132,10 @@
 
     <main class="container mx-auto p-4 md:p-8">
 
-        <section id="quemsomos" class="my-12 scroll-mt-20">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Quem Somos</h2>
-            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Somos um coletivo de docentes e técnicos-administrativos, da ativa e aposentados, unidos pelo desejo de construir um sindicato mais forte, representativo e alinhado com as necessidades reais da nossa categoria.</p>
-            <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg text-gray-700 space-y-4">
-              <p>Nossa chapa nasceu da inquietação e da certeza de que o Sindiedutec pode e deve ser mais atuante na defesa dos nossos direitos, mais transparente na sua gestão e mais inclusivo na sua organização. Acreditamos em um sindicalismo de base, onde as decisões são tomadas de forma coletiva e a diretoria é uma verdadeira porta-voz das aspirações de seus sindicalizados.</p>
-              <p>Lutamos por um sindicato que seja protagonista nas negociações, que combata todas as formas de precarização do trabalho e que defenda intransigentemente a educação pública, gratuita, laica e de qualidade social. Junte-se a nós para renovar e fortalecer o nosso sindicato.</p>
-            </div>
-        </section>
-
         <section id="prioridades" class="my-12 scroll-mt-20">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Nossas 10 Propostas Prioritárias</h2>
             <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Navegue pelo carrossel para conhecer nossos 10 compromissos principais. Eles representam uma mudança real e o foco no que mais importa para a nossa categoria.</p>
-            <div class="swiper-container mySwiper">
+            <div class="swiper-container mySwiper" style="padding-bottom: 40px;">
                 <div id="priority-proposals-container" class="swiper-wrapper">
                 </div>
                 <div class="swiper-button-next"></div>
@@ -256,10 +239,10 @@
                 const slide = document.createElement('div');
                 slide.className = 'swiper-slide p-2';
                 slide.innerHTML = `
-                    <div class="accordion-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer border-l-4 border-blue-500 w-full flex flex-col">
+                    <div class="accordion-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 w-full flex flex-col overflow-hidden">
+                        <img src="https://placehold.co/400x250/E0E7FF/1D4ED8?text=Proposta+${p.id}" alt="Imagem da proposta ${p.title}" class="w-full h-40 object-cover">
                         <div class="p-5 flex justify-between items-center flex-grow">
                             <div class="flex items-center">
-                                <span class="text-blue-600 font-bold text-2xl mr-4">${p.id.toString().padStart(2, '0')}</span>
                                 <h3 class="font-bold text-gray-800 text-lg">${p.title}</h3>
                             </div>
                             <div class="icon-toggle text-blue-500">
@@ -480,17 +463,20 @@
                 mobileMenu.classList.toggle('hidden');
             });
 
-            const sections = document.querySelectorAll('section');
+            const sections = document.querySelectorAll('main > section');
             const navLinks = document.querySelectorAll('.nav-link');
 
             window.addEventListener('scroll', () => {
-              let current = '';
-              sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 100) {
-                  current = section.getAttribute('id');
-                }
-              });
+              let current = 'inicio';
+              
+              if (window.scrollY > 50) {
+                  sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) {
+                      current = section.getAttribute('id');
+                    }
+                  });
+              }
 
               navLinks.forEach(link => {
                 link.classList.remove('active');
