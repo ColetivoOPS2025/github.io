@@ -1,50 +1,37 @@
+### **Página "Quem Somos" (quem-somos.html) - ATUALIZADA**
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quem Somos | Chapa de Oposição</title>
+    <title>Quem Somos | Voz da Base</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-            color: #212529;
-        }
-        :root {
-            --sind-green: #00963f;
-            --sind-red: #da1a2f;
-            --dark-gray: #343a40;
-        }
+        html, body { height: 100%; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #212529; display: flex; flex-direction: column; }
+        main { flex-grow: 1; }
+        :root { --sind-green: #00963f; --sind-red: #da1a2f; --dark-gray: #343a40; }
         .text-sind-green { color: var(--sind-green); }
         .hover-text-sind-green:hover { color: var(--sind-green); }
         .border-sind-green { border-color: var(--sind-green); }
         .bg-dark-gray { background-color: var(--dark-gray); }
-
-        .nav-link.active {
-          color: var(--sind-green);
-          font-weight: 700;
-        }
+        .nav-link.active { color: var(--sind-green); font-weight: 700; }
     </style>
 </head>
 <body class="bg-gray-100">
-
     <nav id="navbar" class="bg-white/90 backdrop-blur-lg shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-6">
             <div class="flex items-center justify-between h-16">
-                <a href="index.html" class="text-xl font-bold text-sind-green">Chapa de Oposição</a>
+                <a href="index.html" class="text-xl font-bold text-sind-green">Voz da Base</a>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html#inicio" class="nav-link text-gray-700 hover-text-sind-green transition">Início</a>
+                    <a href="index.html" class="nav-link text-gray-700 hover-text-sind-green transition">Início</a>
                     <a href="quem-somos.html" class="nav-link active text-gray-700 hover-text-sind-green transition">Quem Somos</a>
-                    <a href="index.html#prioridades" class="nav-link text-gray-700 hover-text-sind-green transition">Propostas</a>
-                    <a href="index.html#pilares" class="nav-link text-gray-700 hover-text-sind-green transition">Pilares</a>
-                    <a href="index.html#diretorias" class="nav-link text-gray-700 hover-text-sind-green transition">Diretorias</a>
+                    <a href="apoie.html" class="nav-link text-gray-700 hover-text-sind-green transition">Apoie</a>
+                    <a href="diretorias.html" class="nav-link text-gray-700 hover-text-sind-green transition">Diretorias</a>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-button" class="text-gray-600 hover-text-sind-green focus:outline-none">
@@ -54,21 +41,18 @@
             </div>
         </div>
         <div id="mobile-menu" class="hidden md:hidden">
-            <a href="index.html#inicio" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-200">Início</a>
+            <a href="index.html" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-200">Início</a>
             <a href="quem-somos.html" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-200">Quem Somos</a>
-            <a href="index.html#prioridades" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-200">Propostas</a>
-            <a href="index.html#pilares" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-200">Pilares</a>
-            <a href="index.html#diretorias" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-200">Diretorias</a>
+            <a href="apoie.html" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-200">Apoie</a>
+            <a href="diretorias.html" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-200">Diretorias</a>
         </div>
     </nav>
-
     <header class="bg-white pt-24 pb-12">
         <div class="container mx-auto px-6 text-center">
             <h1 class="text-4xl md:text-5xl font-extrabold text-sind-green">Conheça Nossa Chapa</h1>
             <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-600">Um coletivo diverso de docentes e técnicos, da ativa e aposentados, unidos pelo compromisso com a base.</p>
         </div>
     </header>
-
     <main class="container mx-auto p-4 md:p-8">
         <section id="membros">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
@@ -79,60 +63,10 @@
                     <p class="text-sind-green font-semibold">Cargo na Chapa</p>
                     <p class="text-gray-600 mt-2">Campus de Origem</p>
                 </div>
-                <!-- Fim do Exemplo de Membro -->
-
-                <div class="bg-white rounded-lg shadow-lg text-center p-6 transform hover:scale-105 transition-transform duration-300">
-                    <img src="https://placehold.co/200x200/e2e8f0/343a40?text=Foto" alt="Foto do Membro" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-sind-green">
-                    <h3 class="text-xl font-bold text-gray-800">Nome do Membro 2</h3>
-                    <p class="text-sind-green font-semibold">Cargo na Chapa</p>
-                    <p class="text-gray-600 mt-2">Campus de Origem</p>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-lg text-center p-6 transform hover:scale-105 transition-transform duration-300">
-                    <img src="https://placehold.co/200x200/e2e8f0/343a40?text=Foto" alt="Foto do Membro" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-sind-green">
-                    <h3 class="text-xl font-bold text-gray-800">Nome do Membro 3</h3>
-                    <p class="text-sind-green font-semibold">Cargo na Chapa</p>
-                    <p class="text-gray-600 mt-2">Campus de Origem</p>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-lg text-center p-6 transform hover:scale-105 transition-transform duration-300">
-                    <img src="https://placehold.co/200x200/e2e8f0/343a40?text=Foto" alt="Foto do Membro" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-sind-green">
-                    <h3 class="text-xl font-bold text-gray-800">Nome do Membro 4</h3>
-                    <p class="text-sind-green font-semibold">Cargo na Chapa</p>
-                    <p class="text-gray-600 mt-2">Campus de Origem</p>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-lg text-center p-6 transform hover:scale-105 transition-transform duration-300">
-                    <img src="https://placehold.co/200x200/e2e8f0/343a40?text=Foto" alt="Foto do Membro" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-sind-green">
-                    <h3 class="text-xl font-bold text-gray-800">Nome do Membro 5</h3>
-                    <p class="text-sind-green font-semibold">Cargo na Chapa</p>
-                    <p class="text-gray-600 mt-2">Campus de Origem</p>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-lg text-center p-6 transform hover:scale-105 transition-transform duration-300">
-                    <img src="https://placehold.co/200x200/e2e8f0/343a40?text=Foto" alt="Foto do Membro" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-sind-green">
-                    <h3 class="text-xl font-bold text-gray-800">Nome do Membro 6</h3>
-                    <p class="text-sind-green font-semibold">Cargo na Chapa</p>
-                    <p class="text-gray-600 mt-2">Campus de Origem</p>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-lg text-center p-6 transform hover:scale-105 transition-transform duration-300">
-                    <img src="https://placehold.co/200x200/e2e8f0/343a40?text=Foto" alt="Foto do Membro" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-sind-green">
-                    <h3 class="text-xl font-bold text-gray-800">Nome do Membro 7</h3>
-                    <p class="text-sind-green font-semibold">Cargo na Chapa</p>
-                    <p class="text-gray-600 mt-2">Campus de Origem</p>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-lg text-center p-6 transform hover:scale-105 transition-transform duration-300">
-                    <img src="https://placehold.co/200x200/e2e8f0/343a40?text=Foto" alt="Foto do Membro" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-sind-green">
-                    <h3 class="text-xl font-bold text-gray-800">Nome do Membro 8</h3>
-                    <p class="text-sind-green font-semibold">Cargo na Chapa</p>
-                    <p class="text-gray-600 mt-2">Campus de Origem</p>
-                </div>
+                 <!-- Fim do Exemplo -->
             </div>
         </section>
     </main>
-
     <footer class="bg-dark-gray text-white mt-16">
         <div class="container mx-auto px-6 py-8 text-center">
             <h3 class="text-2xl font-bold text-sind-green">Junte-se à Mudança</h3>
@@ -142,10 +76,9 @@
                 <a href="https://instagram.com" target="_blank" class="text-gray-300 hover:text-white transition">Instagram</a>
                 <a href="https://whatsapp.com" target="_blank" class="text-gray-300 hover:text-white transition">WhatsApp</a>
             </div>
-            <p class="mt-8 text-sm text-gray-400">© 2025 Chapa de Oposição "Xxxxxx xx Xxxxxxxxxxxx". Todos os direitos reservados.</p>
+            <p class="mt-8 text-sm text-gray-400">© 2025 Chapa "Voz da Base". Todos os direitos reservados.</p>
         </div>
     </footer>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -155,6 +88,6 @@
             });
         });
     </script>
-
 </body>
 </html>
+```
