@@ -134,12 +134,14 @@
         <section id="prioridades" class="my-12 scroll-mt-20">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Nossas 10 Propostas Prioritárias</h2>
             <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Navegue pelo carrossel para conhecer nossos 10 compromissos principais. Eles representam uma mudança real e o foco no que mais importa para a nossa categoria.</p>
-            <div class="swiper-container mySwiper" style="padding-bottom: 40px;">
-                <div id="priority-proposals-container" class="swiper-wrapper">
+            <div class="max-w-6xl mx-auto relative">
+                <div class="swiper-container mySwiper" style="padding-bottom: 40px;">
+                    <div id="priority-proposals-container" class="swiper-wrapper">
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
                 </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
             </div>
         </section>
 
@@ -401,7 +403,7 @@
                             campaignPillars.luta.content.baixa.length,
                             campaignPillars.assistencia.content.baixa.length
                         ],
-                        backgroundColor: 'rgba(22, 163, 74, 0.4)',
+                        backgroundColor: 'rgba(0, 150, 63, 0.4)',
                     }, {
                         label: 'Média Complexidade',
                         data: [
@@ -410,7 +412,7 @@
                             campaignPillars.luta.content.media.length,
                             campaignPillars.assistencia.content.media.length
                         ],
-                        backgroundColor: 'rgba(22, 163, 74, 0.7)',
+                        backgroundColor: 'rgba(0, 150, 63, 0.7)',
                     }, {
                         label: 'Alta Complexidade',
                         data: [
@@ -419,7 +421,7 @@
                             campaignPillars.luta.content.alta.length,
                             campaignPillars.assistencia.content.alta.length
                         ],
-                         backgroundColor: 'rgba(220, 38, 38, 0.9)', 
+                         backgroundColor: 'rgba(218, 26, 47, 0.9)', 
                     }]
                 },
                 options: {
