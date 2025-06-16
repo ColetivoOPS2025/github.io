@@ -17,20 +17,23 @@
     -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals with Blue and Gold Accents -->
-    <!-- Application Structure Plan: A single-page, vertical-scrolling application designed for a persuasive narrative flow. It starts with a Hero section, followed by the "10 Priority Proposals" in an interactive card grid for immediate impact. A tabbed interface then allows users to explore the "4 Pillars of Management" without being overwhelmed. A new data visualization section with a chart analyzes proposal complexity, adding an analytical layer. The structure concludes with the campaign roadmap, a new section correlating proposals to official directorates, and a call to action. This design prioritizes user engagement and clarity over simply replicating the source document's linear structure, guiding the user from high-impact promises to detailed plans. -->
+    <!-- Application Structure Plan: A single-page, vertical-scrolling application with a sticky navigation bar for improved usability. The structure prioritizes a persuasive narrative flow: Hero section, a new "Quem Somos" section, an interactive carousel for "10 Priority Proposals", a tabbed interface for "4 Pillars", data visualization, directorate correlations, and a CTA. The carousel and sticky nav enhance engagement and structure over the previous version. -->
     <!-- Visualization & Content Choices: 
-        - 10 Priorities: Goal: Inform/Engage. Method: Interactive HTML/CSS cards. Interaction: Click to expand details. Justification: Quick scanning of key promises with option for depth.
-        - 4 Pillars: Goal: Organize/Inform. Method: Tabbed navigation. Interaction: Click tab to switch content. Justification: Organizes extensive content cleanly in a compact space.
-        - Proposal Complexity: Goal: Analyze/Compare. Method: Chart.js Horizontal Bar Chart. Interaction: Tooltips on hover. Justification: Provides a data-driven visual summary of the platform's feasibility and balance.
-        - Campaign Roadmap: Goal: Inform/Change. Method: HTML/CSS timeline. Interaction: Visual progression. Justification: Clearly communicates the strategic phases of the campaign.
-        - Directorates: Goal: Organize/Correlate. Method: Interactive accordion cards. Interaction: Click to expand details. Justification: Connects the campaign plan to the real-world structure of the union, adding a practical layer.
+        - 10 Priorities: Goal: Inform/Engage. Method: Interactive Swiper.js carousel. Interaction: Swipe/click to navigate slides, click to expand details. Justification: More dynamic and engaging than a static grid, ideal for highlighting key promises.
+        - Navigation: Goal: Organize/Navigate. Method: Sticky horizontal menu. Interaction: Click to smooth-scroll. Justification: Provides clear, persistent site structure and improves user experience.
+        - Other elements remain as before, supporting the enhanced interactive structure.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', sans-serif;
             background-color: #F9FAFB;
@@ -80,11 +83,54 @@
                 height: 500px;
             }
         }
+        .swiper-button-next, .swiper-button-prev {
+            color: #2563EB;
+        }
+        .swiper-pagination-bullet-active {
+            background-color: #2563EB;
+        }
+        .swiper-slide {
+            height: auto;
+            display: flex;
+            align-items: stretch;
+        }
+        .nav-link.active {
+          color: #2563EB;
+          font-weight: 700;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <header class="bg-blue-800 text-white shadow-lg">
+    <nav id="navbar" class="bg-white/80 backdrop-blur-lg shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between h-16">
+                <a href="#inicio" class="text-xl font-bold text-blue-800">Chapa de Oposição</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#inicio" class="nav-link text-gray-600 hover:text-blue-600 transition">Início</a>
+                    <a href="#quemsomos" class="nav-link text-gray-600 hover:text-blue-600 transition">Quem Somos</a>
+                    <a href="#prioridades" class="nav-link text-gray-600 hover:text-blue-600 transition">Propostas</a>
+                    <a href="#pilares" class="nav-link text-gray-600 hover:text-blue-600 transition">Pilares</a>
+                    <a href="#diretorias" class="nav-link text-gray-600 hover:text-blue-600 transition">Diretorias</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-600 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#inicio" class="block py-2 px-6 text-sm text-gray-600 hover:bg-gray-100">Início</a>
+            <a href="#quemsomos" class="block py-2 px-6 text-sm text-gray-600 hover:bg-gray-100">Quem Somos</a>
+            <a href="#prioridades" class="block py-2 px-6 text-sm text-gray-600 hover:bg-gray-100">Propostas</a>
+            <a href="#pilares" class="block py-2 px-6 text-sm text-gray-600 hover:bg-gray-100">Pilares</a>
+            <a href="#diretorias" class="block py-2 px-6 text-sm text-gray-600 hover:bg-gray-100">Diretorias</a>
+        </div>
+    </nav>
+
+
+    <header id="inicio" class="bg-blue-800 text-white shadow-lg pt-16">
         <div class="container mx-auto px-6 py-8 md:py-12 text-center">
             <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Chapa de Oposição</h1>
             <h2 class="text-2xl md:text-3xl font-bold text-blue-200 mt-2">Xxxxxx xx Xxxxxxxxxxxx</h2>
@@ -94,14 +140,28 @@
 
     <main class="container mx-auto p-4 md:p-8">
 
-        <section id="prioridades" class="my-12">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Nossas 10 Propostas Prioritárias</h2>
-            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Resumimos nosso programa em 10 compromissos que representam uma mudança real e o foco no que mais importa para a nossa categoria. Clique em cada proposta para ver os detalhes.</p>
-            <div id="priority-proposals-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <section id="quemsomos" class="my-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Quem Somos</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Somos um coletivo de docentes e técnicos-administrativos, da ativa e aposentados, unidos pelo desejo de construir um sindicato mais forte, representativo e alinhado com as necessidades reais da nossa categoria.</p>
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg text-gray-700 space-y-4">
+              <p>Nossa chapa nasceu da inquietação e da certeza de que o Sindiedutec pode e deve ser mais atuante na defesa dos nossos direitos, mais transparente na sua gestão e mais inclusivo na sua organização. Acreditamos em um sindicalismo de base, onde as decisões são tomadas de forma coletiva e a diretoria é uma verdadeira porta-voz das aspirações de seus sindicalizados.</p>
+              <p>Lutamos por um sindicato que seja protagonista nas negociações, que combata todas as formas de precarização do trabalho e que defenda intransigentemente a educação pública, gratuita, laica e de qualidade social. Junte-se a nós para renovar e fortalecer o nosso sindicato.</p>
             </div>
         </section>
 
-        <section id="pilares" class="my-16 bg-white p-6 md:p-10 rounded-2xl shadow-lg">
+        <section id="prioridades" class="my-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Nossas 10 Propostas Prioritárias</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Navegue pelo carrossel para conhecer nossos 10 compromissos principais. Eles representam uma mudança real e o foco no que mais importa para a nossa categoria.</p>
+            <div class="swiper-container mySwiper">
+                <div id="priority-proposals-container" class="swiper-wrapper">
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+
+        <section id="pilares" class="my-16 bg-white p-6 md:p-10 rounded-2xl shadow-lg scroll-mt-20">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Os 4 Pilares da Nossa Gestão</h2>
             <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Nossa atuação será guiada por quatro eixos fundamentais, que estruturam um plano de ação completo e coeso, da gestão diária às lutas mais amplas.</p>
             <div id="tabs-container" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
@@ -110,7 +170,7 @@
             </div>
         </section>
 
-        <section id="analise" class="my-16">
+        <section id="analise" class="my-16 scroll-mt-20">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Análise do Plano de Ação</h2>
             <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Visualizamos nosso programa para demonstrar o equilíbrio entre ações de implementação imediata e projetos de longo prazo em cada pilar da nossa gestão. Isso reflete um plano de trabalho realista e estratégico.</p>
             <div class="bg-white p-4 md:p-8 rounded-2xl shadow-lg">
@@ -119,18 +179,18 @@
                 </div>
             </div>
         </section>
-
-        <section id="estrategia" class="my-16">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Estratégia de Campanha</h2>
-            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Nossa campanha é um processo transparente e organizado em fases claras. O objetivo é construir este projeto junto com a categoria, passo a passo.</p>
-            <div class="flex flex-col md:flex-row justify-center items-stretch gap-6">
-            </div>
-        </section>
         
-        <section id="diretorias" class="my-16">
+        <section id="diretorias" class="my-16 scroll-mt-20">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Propostas para as Diretorias</h2>
             <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Conectamos nosso plano de ação à estrutura oficial do sindicato. Veja como nossas propostas se traduzem em atuação direta em cada diretoria e contribua com novas ideias.</p>
             <div id="directorates-container" class="space-y-4">
+            </div>
+        </section>
+        
+        <section id="estrategia" class="my-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Estratégia de Campanha</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Nossa campanha é um processo transparente e organizado em fases claras. O objetivo é construir este projeto junto com a categoria, passo a passo.</p>
+            <div class="flex flex-col md:flex-row justify-center items-stretch gap-6">
             </div>
         </section>
 
@@ -165,42 +225,10 @@
             ];
 
             const campaignPillars = {
-                gestao: {
-                    title: 'Gestão e Organização Sindical',
-                    icon: '🏛️',
-                    content: {
-                        baixa: ['Comunicação Eficiente e Transparente', 'Criação de Comissões Temáticas', 'Plano de Ação Anual'],
-                        media: ['Democracia e Participação', 'Fortalecimento dos NSBs', 'Observatórios de Carreira'],
-                        alta: ['Gestão Colegiada', 'Voto por Proporcionalidade', 'Processo Estatuinte']
-                    }
-                },
-                formacao: {
-                    title: 'Formação Política e Crítica',
-                    icon: '📚',
-                    content: {
-                        baixa: ['Campanhas de Sindicalização', 'Valorização da Produção Interna', 'Café com Política'],
-                        media: ['Ciclo de Formação Permanente', 'Debates Estratégicos', 'Análise de Cenário'],
-                        alta: ['Parcerias para Certificação']
-                    }
-                },
-                luta: {
-                    title: 'Luta e Mobilização',
-                    icon: '✊',
-                    content: {
-                        baixa: ['Canal de Denúncias contra Assédio', 'Combate às Opressões', 'Diálogo Permanente com Federações'],
-                        media: ['Atuação Firme na Reitoria', 'Diagnóstico das Condições de Trabalho', 'Assembleias Híbridas'],
-                        alta: ['Criação do Fundo de Greve', 'Protocolo de Greve', 'Luta pela Carga Horária e 30h para TAEs']
-                    }
-                },
-                assistencia: {
-                    title: 'Assistência, Saúde e Bem-Estar',
-                    icon: '❤️',
-                    content: {
-                        baixa: ['Acolhimento de Novos Servidores', 'Mapeamento em Saúde Mental'],
-                        media: ['Assessoria Jurídica Especializada', 'Programa de Saúde do Trabalhador'],
-                        alta: ['Auditoria e Negociação do Plano de Saúde', 'Novos Convênios e Parcerias']
-                    }
-                }
+                gestao: { title: 'Gestão e Organização Sindical', content: { baixa: ['Comunicação Eficiente e Transparente', 'Criação de Comissões Temáticas', 'Plano de Ação Anual'], media: ['Democracia e Participação', 'Fortalecimento dos NSBs', 'Observatórios de Carreira'], alta: ['Gestão Colegiada', 'Voto por Proporcionalidade', 'Processo Estatuinte'] } },
+                formacao: { title: 'Formação Política e Crítica', content: { baixa: ['Campanhas de Sindicalização', 'Valorização da Produção Interna', 'Café com Política'], media: ['Ciclo de Formação Permanente', 'Debates Estratégicos', 'Análise de Cenário'], alta: ['Parcerias para Certificação'] } },
+                luta: { title: 'Luta e Mobilização', content: { baixa: ['Canal de Denúncias contra Assédio', 'Combate às Opressões', 'Diálogo Permanente com Federações'], media: ['Atuação Firme na Reitoria', 'Diagnóstico das Condições de Trabalho', 'Assembleias Híbridas'], alta: ['Criação do Fundo de Greve', 'Protocolo de Greve', 'Luta pela Carga Horária e 30h para TAEs'] } },
+                assistencia: { title: 'Assistência, Saúde e Bem-Estar', content: { baixa: ['Acolhimento de Novos Servidores', 'Mapeamento em Saúde Mental'], media: ['Assessoria Jurídica Especializada', 'Programa de Saúde do Trabalhador'], alta: ['Auditoria e Negociação do Plano de Saúde', 'Novos Convênios e Parcerias'] } }
             };
             
             const campaignStrategy = [
@@ -223,6 +251,60 @@
                 { name: 'Diretoria de Organização Sindical', related: ['Fortalecimento dos NSBs e Interiorização', 'Gestão Colegiada e Democrática', 'Processo Estatuinte Participativo'], new_ideas_prompt: 'Como podemos garantir que a reestruturação proposta (gestão colegiada, novo estatuto) seja implementada de forma democrática?' },
             ];
             
+            const priorityContainer = document.getElementById('priority-proposals-container');
+            priorityProposals.forEach(p => {
+                const slide = document.createElement('div');
+                slide.className = 'swiper-slide p-2';
+                slide.innerHTML = `
+                    <div class="accordion-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer border-l-4 border-blue-500 w-full flex flex-col">
+                        <div class="p-5 flex justify-between items-center flex-grow">
+                            <div class="flex items-center">
+                                <span class="text-blue-600 font-bold text-2xl mr-4">${p.id.toString().padStart(2, '0')}</span>
+                                <h3 class="font-bold text-gray-800 text-lg">${p.title}</h3>
+                            </div>
+                            <div class="icon-toggle text-blue-500">
+                               <span class="plus-icon text-3xl font-light">+</span>
+                            </div>
+                        </div>
+                        <div class="details px-5 text-gray-600">
+                            <p>${p.details}</p>
+                        </div>
+                    </div>
+                `;
+                slide.querySelector('.accordion-card').addEventListener('click', (e) => {
+                    e.currentTarget.classList.toggle('active');
+                });
+                priorityContainer.appendChild(slide);
+            });
+
+            new Swiper(".mySwiper", {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 30,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                },
+            });
+
             function createAccordionCards(containerId, data, cardClass, titleField, detailsField) {
                  const container = document.getElementById(containerId);
                  if (!container) return;
@@ -232,7 +314,6 @@
                     card.innerHTML = `
                         <div class="p-5 flex justify-between items-center">
                             <div class="flex items-center w-full">
-                                ${item.id ? `<span class="text-blue-600 font-bold text-xl mr-4">${item.id.toString().padStart(2, '0')}</span>` : ''}
                                 <h3 class="font-bold text-gray-800 flex-1">${item[titleField]}</h3>
                             </div>
                             <div class="icon-toggle text-blue-500">
@@ -250,8 +331,6 @@
                 });
             }
 
-            createAccordionCards('priority-proposals-container', priorityProposals, 'border-l-4 border-blue-500', 'title', item => `<p>${item.details}</p>`);
-            
             const directorateDetailsHTML = item => `
                 <div class="space-y-4">
                     <div>
@@ -376,39 +455,49 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        x: {
-                            stacked: true,
-                            title: {
-                                display: true,
-                                text: 'Número de Propostas'
-                            }
-                        },
-                        y: {
-                            stacked: true,
-                        }
+                        x: { stacked: true, title: { display: true, text: 'Número de Propostas' }},
+                        y: { stacked: true }
                     },
                     plugins: {
-                        title: {
-                            display: true,
-                            text: 'Distribuição de Propostas por Pilar e Complexidade',
-                            font: { size: 18 }
-                        },
+                        title: { display: true, text: 'Distribuição de Propostas por Pilar e Complexidade', font: { size: 18 }},
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
                                     let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed.x !== null) {
-                                        label += context.parsed.x + ' proposta(s)';
-                                    }
+                                    if (label) { label += ': '; }
+                                    if (context.parsed.x !== null) { label += context.parsed.x + ' proposta(s)';}
                                     return label;
                                 }
                             }
                         }
                     }
                 }
+            });
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+              let current = '';
+              sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                  current = section.getAttribute('id');
+                }
+              });
+
+              navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                  link.classList.add('active');
+                }
+              });
             });
 
         });
