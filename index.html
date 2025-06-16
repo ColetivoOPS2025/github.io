@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano de Campanha | Chapa de Oposição</title>
+    <!-- 
+        GUIA DE IMPLEMENTAÇÃO NO GITHUB PAGES:
+
+        1. Crie um novo repositório no seu GitHub.
+        2. Salve este código completo em um arquivo chamado "index.html".
+        3. Faça o upload do arquivo "index.html" para o repositório que você criou.
+        4. No seu repositório no GitHub, vá em "Settings" (Configurações) > "Pages" (Páginas).
+        5. Na seção "Branch", selecione a branch principal ("main" ou "master") e a pasta "/ (root)".
+        6. Clique em "Save" (Salvar).
+        7. Após alguns minutos, seu site estará no ar no endereço: https://SEU-USUARIO.github.io/NOME-DO-REPOSITORIO/
+    -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Blue and Gold Accents -->
+    <!-- Application Structure Plan: A single-page, vertical-scrolling application designed for a persuasive narrative flow. It starts with a Hero section, followed by the "10 Priority Proposals" in an interactive card grid for immediate impact. A tabbed interface then allows users to explore the "4 Pillars of Management" without being overwhelmed. A new data visualization section with a chart analyzes proposal complexity, adding an analytical layer. The structure concludes with the campaign roadmap, a new section correlating proposals to official directorates, and a call to action. This design prioritizes user engagement and clarity over simply replicating the source document's linear structure, guiding the user from high-impact promises to detailed plans. -->
+    <!-- Visualization & Content Choices: 
+        - 10 Priorities: Goal: Inform/Engage. Method: Interactive HTML/CSS cards. Interaction: Click to expand details. Justification: Quick scanning of key promises with option for depth.
+        - 4 Pillars: Goal: Organize/Inform. Method: Tabbed navigation. Interaction: Click tab to switch content. Justification: Organizes extensive content cleanly in a compact space.
+        - Proposal Complexity: Goal: Analyze/Compare. Method: Chart.js Horizontal Bar Chart. Interaction: Tooltips on hover. Justification: Provides a data-driven visual summary of the platform's feasibility and balance.
+        - Campaign Roadmap: Goal: Inform/Change. Method: HTML/CSS timeline. Interaction: Visual progression. Justification: Clearly communicates the strategic phases of the campaign.
+        - Directorates: Goal: Organize/Correlate. Method: Interactive accordion cards. Interaction: Click to expand details. Justification: Connects the campaign plan to the real-world structure of the union, adding a practical layer.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9FAFB;
+            color: #1F2937;
+        }
+        .tab-button.active {
+            border-color: #2563EB;
+            background-color: #2563EB;
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .accordion-card .details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .accordion-card.active .details {
+            max-height: 500px;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .accordion-card.active .icon-toggle .plus-icon {
+            transform: rotate(45deg);
+        }
+        .icon-toggle .plus-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-blue-800 text-white shadow-lg">
+        <div class="container mx-auto px-6 py-8 md:py-12 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Chapa de Oposição</h1>
+            <h2 class="text-2xl md:text-3xl font-bold text-blue-200 mt-2">Xxxxxx xx Xxxxxxxxxxxx</h2>
+            <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-blue-100">Por um sindicato mais democrático, transparente e combativo. Conheça nossas propostas para renovar o Sindiedutec.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="prioridades" class="my-12">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Nossas 10 Propostas Prioritárias</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Resumimos nosso programa em 10 compromissos que representam uma mudança real e o foco no que mais importa para a nossa categoria. Clique em cada proposta para ver os detalhes.</p>
+            <div id="priority-proposals-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+        </section>
+
+        <section id="pilares" class="my-16 bg-white p-6 md:p-10 rounded-2xl shadow-lg">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Os 4 Pilares da Nossa Gestão</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Nossa atuação será guiada por quatro eixos fundamentais, que estruturam um plano de ação completo e coeso, da gestão diária às lutas mais amplas.</p>
+            <div id="tabs-container" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
+            </div>
+            <div id="tab-content-container" class="mt-8">
+            </div>
+        </section>
+
+        <section id="analise" class="my-16">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Análise do Plano de Ação</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Visualizamos nosso programa para demonstrar o equilíbrio entre ações de implementação imediata e projetos de longo prazo em cada pilar da nossa gestão. Isso reflete um plano de trabalho realista e estratégico.</p>
+            <div class="bg-white p-4 md:p-8 rounded-2xl shadow-lg">
+                <div class="chart-container">
+                    <canvas id="complexityChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="estrategia" class="my-16">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Estratégia de Campanha</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Nossa campanha é um processo transparente e organizado em fases claras. O objetivo é construir este projeto junto com a categoria, passo a passo.</p>
+            <div class="flex flex-col md:flex-row justify-center items-stretch gap-6">
+            </div>
+        </section>
+        
+        <section id="diretorias" class="my-16">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Propostas para as Diretorias</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Conectamos nosso plano de ação à estrutura oficial do sindicato. Veja como nossas propostas se traduzem em atuação direta em cada diretoria e contribua com novas ideias.</p>
+            <div id="directorates-container" class="space-y-4">
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <h3 class="text-2xl font-bold">Junte-se à Mudança</h3>
+            <p class="mt-4 max-w-2xl mx-auto">Siga-nos nas redes sociais, participe dos debates e ajude a construir o sindicato que a nossa categoria merece.</p>
+            <div class="flex justify-center space-x-6 mt-6">
+                <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white transition">Facebook</a>
+                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white transition">Instagram</a>
+                <a href="https://whatsapp.com" target="_blank" class="text-gray-400 hover:text-white transition">WhatsApp</a>
+            </div>
+            <p class="mt-8 text-sm text-gray-500">© 2025 Chapa de Oposição "Xxxxxx xx Xxxxxxxxxxxx". Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const priorityProposals = [
+                { id: 1, title: 'Combate Efetivo ao Assédio', details: 'Criação de um canal de denúncias seguro e independente, com acolhimento humanizado e assessoria jurídica especializada para garantir que nenhum trabalhador ou trabalhadora se sinta desamparado.' },
+                { id: 2, title: 'Auditoria e Melhoria do Plano de Saúde', details: 'Formação de uma comissão com participação da base para auditar o contrato atual e negociar um plano com melhor cobertura, especialmente no interior, e uma relação custo-benefício mais justa.' },
+                { id: 3, title: 'Luta Intransigente pela Carreira', details: 'Atuação firme pela regularização das progressões, transparência nos processos de remoção, normatização da carga horária docente e luta pela regulamentação das 30 horas para os TAEs.' },
+                { id: 4, title: 'Gestão Colegiada e Democrática', details: 'Substituição do modelo de presidência por uma gestão colegiada para descentralizar o poder, garantir a representatividade dos campi e tomar decisões de forma verdadeiramente coletiva.' },
+                { id: 5, title: 'Fortalecimento dos NSBs e Interiorização', details: 'Garantir autonomia, apoio político e material aos NSBs como forma de fortalecer a presença e a ação do sindicato em todos os campi.' },
+                { id: 6, title: 'Criação do Fundo de Greve', details: 'Estabelecer um fundo de greve, garantido por estatuto e sem aumento de contribuição, para dar o suporte material necessário à organização de mobilizações fortes e consequentes.' },
+                { id: 7, title: 'Comunicação Transparente e Diálogo', details: 'Implementar uma política de comunicação ágil e transparente, com canais abertos para o diálogo constante com a base, prestando contas das ações da diretoria.' },
+                { id: 8, title: 'Assessoria Jurídica Descentralizada', details: 'Ampliar e qualificar a assessoria jurídica, garantindo atendimento especializado e presencial nos campi do interior para defender os direitos individuais e coletivos da categoria.' },
+                { id: 9, title: 'Processo Estatuinte Participativo', details: 'Convocar um processo de reforma estatutária com ampla participação da base para modernizar nosso estatuto e adequá-lo a um modelo de sindicato mais democrático e combativo.' },
+                { id: 10, title: 'Diagnóstico das Condições de Trabalho', details: 'Realizar um levantamento completo sobre a infraestrutura, as condições de trabalho e a saúde dos trabalhadores em todos os campi, transformando os dados em pautas concretas de negociação com a Reitoria.' },
+            ];
+
+            const campaignPillars = {
+                gestao: {
+                    title: 'Gestão e Organização Sindical',
+                    icon: '🏛️',
+                    content: {
+                        baixa: ['Comunicação Eficiente e Transparente', 'Criação de Comissões Temáticas', 'Plano de Ação Anual'],
+                        media: ['Democracia e Participação', 'Fortalecimento dos NSBs', 'Observatórios de Carreira'],
+                        alta: ['Gestão Colegiada', 'Voto por Proporcionalidade', 'Processo Estatuinte']
+                    }
+                },
+                formacao: {
+                    title: 'Formação Política e Crítica',
+                    icon: '📚',
+                    content: {
+                        baixa: ['Campanhas de Sindicalização', 'Valorização da Produção Interna', 'Café com Política'],
+                        media: ['Ciclo de Formação Permanente', 'Debates Estratégicos', 'Análise de Cenário'],
+                        alta: ['Parcerias para Certificação']
+                    }
+                },
+                luta: {
+                    title: 'Luta e Mobilização',
+                    icon: '✊',
+                    content: {
+                        baixa: ['Canal de Denúncias contra Assédio', 'Combate às Opressões', 'Diálogo Permanente com Federações'],
+                        media: ['Atuação Firme na Reitoria', 'Diagnóstico das Condições de Trabalho', 'Assembleias Híbridas'],
+                        alta: ['Criação do Fundo de Greve', 'Protocolo de Greve', 'Luta pela Carga Horária e 30h para TAEs']
+                    }
+                },
+                assistencia: {
+                    title: 'Assistência, Saúde e Bem-Estar',
+                    icon: '❤️',
+                    content: {
+                        baixa: ['Acolhimento de Novos Servidores', 'Mapeamento em Saúde Mental'],
+                        media: ['Assessoria Jurídica Especializada', 'Programa de Saúde do Trabalhador'],
+                        alta: ['Auditoria e Negociação do Plano de Saúde', 'Novos Convênios e Parcerias']
+                    }
+                }
+            };
+            
+            const campaignStrategy = [
+                { phase: 1, title: 'Estruturação', details: ['Definir nome, identidade visual e slogan.', 'Mapear apoiadores-chave em cada campus.', 'Articular representante para a comissão eleitoral.'], color: 'bg-blue-100' },
+                { phase: 2, title: 'Engajamento', details: ['Lançamento público da chapa e propostas.', 'Intensificar conteúdo para redes sociais.', 'Ampliar base de contatos e articular com coletivos.'], color: 'bg-green-100' },
+                { phase: 3, title: 'Consolidação', details: ['Garantir apoio jurídico e validar sistema de votação.', 'Intensificar divulgação do programa nos campi.', 'Obter listas de filiados via NSBs.'], color: 'bg-yellow-100' }
+            ];
+
+            const directorates = [
+                { name: 'Diretoria Administrativa e de Patrimônio', related: ['Diagnóstico das Condições de Trabalho', 'Criação do Fundo de Greve', 'Gestão de Convênios'], new_ideas_prompt: 'Como podemos otimizar o uso dos recursos e do patrimônio do sindicato para melhor servir a categoria?' },
+                { name: 'Diretoria Financeira', related: ['Criação do Fundo de Greve', 'Auditoria do Plano de Saúde', 'Transparência total nas contas'], new_ideas_prompt: 'Quais novas políticas de transparência e controle financeiro podemos implementar?' },
+                { name: 'Diretoria de Assuntos da Carreira Técnico-Administrativo', related: ['Luta pela regulamentação das 30 horas', 'Observatório da Carreira TAE', 'Combate ao desvio de função'], new_ideas_prompt: 'Quais são as pautas mais urgentes para os TAEs hoje que precisam de ação imediata?' },
+                { name: 'Diretoria de Assuntos da Carreira Docente', related: ['Normatização da carga horária', 'Observatório da Carreira Docente', 'Defesa da autonomia de cátedra'], new_ideas_prompt: 'Como podemos atuar contra a precarização do trabalho docente e o avanço do ensino a distância sem planejamento?' },
+                { name: 'Diretoria de Comunicação', related: ['Comunicação Transparente e Diálogo', 'Revitalização do site e redes sociais', 'Criação de canais de escuta'], new_ideas_prompt: 'Que novas ferramentas podemos usar para garantir que a informação chegue a toda a base de forma rápida e acessível?' },
+                { name: 'Diretoria de Políticas Sociais, Culturais e Esportivas', related: ['Combate Efetivo às Opressões', 'Novos Convênios e Parcerias', 'Valorização da Produção Interna'], new_ideas_prompt: 'Como integrar as lutas sociais e identitárias de forma transversal na atuação sindical?' },
+                { name: 'Diretoria de Formação Política', related: ['Ciclo de Formação Permanente', 'Debates Estratégicos', 'Café com Política'], new_ideas_prompt: 'Quais temas de formação são prioritários para fortalecer a consciência de classe e a capacidade de mobilização da categoria?' },
+                { name: 'Diretoria Jurídica e Relações de Trabalho', related: ['Assessoria Jurídica Descentralizada', 'Combate Efetivo ao Assédio', 'Atuação Firme na Reitoria'], new_ideas_prompt: 'Além do combate ao assédio, em que outras frentes a atuação jurídica pode ser mais proativa na defesa dos nossos direitos?' },
+                { name: 'Diretoria de Aposentadoria, Saúde e Previdência', related: ['Auditoria e Melhoria do Plano de Saúde', 'Programa de Saúde do Trabalhador', 'Acolhimento de Aposentados'], new_ideas_prompt: 'Como garantir que os aposentados permaneçam integrados e ativos na vida do sindicato?' },
+                { name: 'Diretoria de Sindicalizados e Política Sindical', related: ['Campanhas de Sindicalização', 'Protocolo de Greve', 'Diálogo Permanente com Federações'], new_ideas_prompt: 'Que estratégias podemos criar para aumentar a sindicalização e o engajamento da categoria nas atividades sindicais?' },
+                { name: 'Diretoria de Organização Sindical', related: ['Fortalecimento dos NSBs e Interiorização', 'Gestão Colegiada e Democrática', 'Processo Estatuinte Participativo'], new_ideas_prompt: 'Como podemos garantir que a reestruturação proposta (gestão colegiada, novo estatuto) seja implementada de forma democrática?' },
+            ];
+            
+            function createAccordionCards(containerId, data, cardClass, titleField, detailsField) {
+                 const container = document.getElementById(containerId);
+                 if (!container) return;
+                 data.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = `${cardClass} accordion-card bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer`;
+                    card.innerHTML = `
+                        <div class="p-5 flex justify-between items-center">
+                            <div class="flex items-center w-full">
+                                ${item.id ? `<span class="text-blue-600 font-bold text-xl mr-4">${item.id.toString().padStart(2, '0')}</span>` : ''}
+                                <h3 class="font-bold text-gray-800 flex-1">${item[titleField]}</h3>
+                            </div>
+                            <div class="icon-toggle text-blue-500">
+                               <span class="plus-icon text-2xl font-light">+</span>
+                            </div>
+                        </div>
+                        <div class="details px-5 text-gray-600">
+                           ${detailsField(item)}
+                        </div>
+                    `;
+                    card.addEventListener('click', () => {
+                        card.classList.toggle('active');
+                    });
+                    container.appendChild(card);
+                });
+            }
+
+            createAccordionCards('priority-proposals-container', priorityProposals, 'border-l-4 border-blue-500', 'title', item => `<p>${item.details}</p>`);
+            
+            const directorateDetailsHTML = item => `
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-700">Propostas Correlacionadas:</h4>
+                        <ul class="list-disc list-inside mt-2 space-y-1">
+                            ${item.related.map(r => `<li>${r}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-blue-800">Propostas de Atuação (Contribua):</h4>
+                        <p class="mt-2 text-blue-700 italic">${item.new_ideas_prompt}</p>
+                    </div>
+                </div>
+            `;
+            createAccordionCards('directorates-container', directorates, 'border-t-4 border-blue-500', 'name', directorateDetailsHTML);
+
+
+            const tabsContainer = document.getElementById('tabs-container');
+            const contentContainer = document.getElementById('tab-content-container');
+
+            Object.keys(campaignPillars).forEach((key, index) => {
+                const pillar = campaignPillars[key];
+                const button = document.createElement('button');
+                button.className = `tab-button text-sm md:text-base px-4 py-2 rounded-lg font-semibold border-2 border-transparent transition-colors duration-300`;
+                button.textContent = pillar.title;
+                button.dataset.tab = key;
+                if (index === 0) button.classList.add('active');
+                tabsContainer.appendChild(button);
+
+                const contentDiv = document.createElement('div');
+                contentDiv.id = key;
+                contentDiv.className = 'tab-content';
+                if (index === 0) contentDiv.classList.add('active');
+                
+                let contentHTML = `<div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">`;
+                const complexityLevels = {
+                    baixa: { title: 'Baixa Complexidade', subtitle: 'Ações de Implementação Imediata', color: 'border-green-500' },
+                    media: { title: 'Média Complexidade', subtitle: 'Ações Estruturantes', color: 'border-yellow-500' },
+                    alta: { title: 'Alta Complexidade', subtitle: 'Ações Estratégicas', color: 'border-red-500' }
+                };
+                
+                Object.keys(complexityLevels).forEach(levelKey => {
+                    if (pillar.content[levelKey] && pillar.content[levelKey].length > 0) {
+                        contentHTML += `
+                            <div class="bg-gray-50 p-6 rounded-lg border-t-4 ${complexityLevels[levelKey].color}">
+                                <h4 class="font-bold text-lg text-gray-700">${complexityLevels[levelKey].title}</h4>
+                                <p class="text-sm text-gray-500 mb-4">${complexityLevels[levelKey].subtitle}</p>
+                                <ul class="list-disc list-inside space-y-2 text-gray-600">
+                                    ${pillar.content[levelKey].map(item => `<li>${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+                });
+                contentHTML += `</div>`;
+                contentDiv.innerHTML = contentHTML;
+                contentContainer.appendChild(contentDiv);
+            });
+            
+            tabsContainer.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const tabId = e.target.dataset.tab;
+                    tabsContainer.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    contentContainer.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    document.getElementById(tabId).classList.add('active');
+                }
+            });
+
+            const strategyContainer = document.querySelector('#estrategia > div');
+            campaignStrategy.forEach(s => {
+                const card = document.createElement('div');
+                card.className = `w-full md:w-1/3 p-6 rounded-xl shadow-lg flex flex-col ${s.color}`;
+                card.innerHTML = `
+                    <div class="flex-grow">
+                        <span class="text-5xl font-extrabold text-gray-400/50">0${s.phase}</span>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-2 mb-4">${s.title}</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                           ${s.details.map(d => `<li>${d}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                strategyContainer.appendChild(card);
+            });
+
+            const ctx = document.getElementById('complexityChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Gestão', 'Formação', 'Luta', 'Assistência'],
+                    datasets: [{
+                        label: 'Baixa Complexidade',
+                        data: [
+                            campaignPillars.gestao.content.baixa.length,
+                            campaignPillars.formacao.content.baixa.length,
+                            campaignPillars.luta.content.baixa.length,
+                            campaignPillars.assistencia.content.baixa.length
+                        ],
+                        backgroundColor: '#4ADE80',
+                    }, {
+                        label: 'Média Complexidade',
+                        data: [
+                            campaignPillars.gestao.content.media.length,
+                            campaignPillars.formacao.content.media.length,
+                            campaignPillars.luta.content.media.length,
+                            campaignPillars.assistencia.content.media.length
+                        ],
+                        backgroundColor: '#FACC15',
+                    }, {
+                        label: 'Alta Complexidade',
+                        data: [
+                            campaignPillars.gestao.content.alta.length,
+                            campaignPillars.formacao.content.alta.length,
+                            campaignPillars.luta.content.alta.length,
+                            campaignPillars.assistencia.content.alta.length
+                        ],
+                        backgroundColor: '#F87171',
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true,
+                            title: {
+                                display: true,
+                                text: 'Número de Propostas'
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Distribuição de Propostas por Pilar e Complexidade',
+                            font: { size: 18 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.x !== null) {
+                                        label += context.parsed.x + ' proposta(s)';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
